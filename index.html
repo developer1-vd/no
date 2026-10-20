@@ -22,7 +22,6 @@
       color: var(--fg);
       font-family: "Space Grotesk", system-ui, sans-serif;
       overflow-x: hidden;
-      cursor: pointer;
     }
 
     /* ---------- cool site ---------- */
@@ -146,7 +145,7 @@
       <section class="cards">
         <div class="card"><div class="icon">⚡</div><h3>Hyperfast</h3><p>Deploys in under a blink. Literally faster than your monitor refresh rate.</p></div>
         <div class="card"><div class="icon">🛰️</div><h3>Orbital scale</h3><p>From one user to one billion without touching a single config file.</p></div>
-        <div class="card"><div class="icon">🔮</div><h3>Predictive AI</h3><p>Knows what you want before you click. Go on, click anything.</p></div>
+        <div class="card"><div class="icon">🔮</div><h3>Predictive AI</h3><p>Knows what you want before you click. Go on, press a button.</p></div>
       </section>
     </main>
 
@@ -180,11 +179,13 @@
     addEventListener('resize', resize);
     resize(); tick();
 
-    // Click anywhere → NO
-    document.addEventListener('click', () => {
-      document.title = 'NO';
-      document.body.classList.add('nope');
-    }, { once: true });
+    // Click a button → NO
+    document.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.title = 'NO';
+        document.body.classList.add('nope');
+      });
+    });
   </script>
 </body>
 </html>
