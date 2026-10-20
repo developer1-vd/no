@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nebula Labs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Anton&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #07060f;
+      --fg: #f2f0ff;
+      --muted: #9b97b8;
+      --a: #7c5cff;
+      --b: #00e0ff;
+      --c: #ff4fd8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      overflow-x: hidden;
+      cursor: pointer;
+    }
+
+    /* ---------- cool site ---------- */
+    #site { position: relative; min-height: 100vh; }
+    canvas#stars { position: fixed; inset: 0; z-index: 0; }
+    .blob {
+      position: fixed; border-radius: 50%; filter: blur(90px); opacity: .55; z-index: 0;
+      animation: float 14s ease-in-out infinite alternate;
+    }
+    .blob.one { width: 420px; height: 420px; background: var(--a); top: -120px; left: -100px; }
+    .blob.two { width: 360px; height: 360px; background: var(--b); bottom: -120px; right: -80px; animation-delay: -5s; }
+    .blob.three { width: 280px; height: 280px; background: var(--c); top: 40%; left: 55%; animation-delay: -9s; }
+    @keyframes float {
+      to { transform: translate(60px, -40px) scale(1.15); }
+    }
+
+    nav, main, footer { position: relative; z-index: 1; }
+    nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 24px clamp(16px, 5vw, 64px);
+    }
+    .logo { font-weight: 700; font-size: 1.3rem; letter-spacing: .02em; }
+    .logo span { color: var(--b); }
+    nav ul { display: flex; gap: 28px; list-style: none; color: var(--muted); }
+    @media (max-width: 600px) { nav ul { display: none; } }
+
+    main { padding: 8vh clamp(16px, 5vw, 64px) 6vh; max-width: 1200px; margin: 0 auto; }
+    .tag {
+      display: inline-block; padding: 6px 14px; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.15); color: var(--muted); font-size: .85rem;
+      backdrop-filter: blur(8px);
+    }
+    h1 {
+      font-size: clamp(2.8rem, 9vw, 7rem); line-height: .95; margin: 24px 0;
+      letter-spacing: -.03em;
+    }
+    h1 .grad {
+      background: linear-gradient(90deg, var(--a), var(--b), var(--c), var(--a));
+      background-size: 300% 100%;
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      animation: shimmer 6s linear infinite;
+    }
+    @keyframes shimmer { to { background-position: 300% 0; } }
+    .lead { max-width: 560px; color: var(--muted); font-size: 1.15rem; line-height: 1.6; }
+    .cta { margin-top: 36px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn {
+      padding: 14px 26px; border-radius: 12px; font-weight: 600; border: 0; font: inherit;
+      cursor: pointer;
+    }
+    .btn.primary { background: linear-gradient(135deg, var(--a), var(--c)); color: #fff; box-shadow: 0 10px 40px -10px var(--c); }
+    .btn.ghost { background: rgba(255,255,255,.06); color: var(--fg); border: 1px solid rgba(255,255,255,.15); }
+
+    .cards {
+      margin-top: 12vh; display: grid; gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+    .card {
+      padding: 28px; border-radius: 20px;
+      background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1);
+      backdrop-filter: blur(12px);
+      transition: transform .3s, border-color .3s;
+    }
+    .card:hover { transform: translateY(-6px); border-color: var(--b); }
+    .card .icon { font-size: 1.8rem; margin-bottom: 14px; }
+    .card h3 { margin-bottom: 8px; }
+    .card p { color: var(--muted); line-height: 1.5; }
+
+    footer { text-align: center; color: var(--muted); padding: 40px 16px; font-size: .9rem; }
+
+    /* ---------- NO ---------- */
+    #no {
+      position: fixed; inset: 0; z-index: 10;
+      display: none; place-items: center;
+      background: #ff1f3d;
+      overflow: hidden;
+    }
+    body.nope #no { display: grid; }
+    body.nope #site { display: none; }
+    #no h1 {
+      font-family: "Anton", Impact, sans-serif;
+      font-size: 55vmin; line-height: 1; margin: 0; color: #fff;
+      letter-spacing: -.02em;
+      text-shadow: 0 0 0 #000, 12px 12px 0 #000;
+      animation: slam .45s cubic-bezier(.2, 1.6, .4, 1) both;
+    }
+    @keyframes slam {
+      0% { transform: scale(4) rotate(-12deg); opacity: 0; }
+      100% { transform: scale(1) rotate(0); opacity: 1; }
+    }
+    body.nope { animation: shake .4s; }
+    @keyframes shake {
+      0%,100% { transform: translate(0,0); }
+      20% { transform: translate(-14px, 8px); }
+      40% { transform: translate(12px, -10px); }
+      60% { transform: translate(-8px, 6px); }
+      80% { transform: translate(6px, -4px); }
+    }
+  </style>
+</head>
+<body>
+  <div id="site">
+    <canvas id="stars"></canvas>
+    <div class="blob one"></div>
+    <div class="blob two"></div>
+    <div class="blob three"></div>
+
+    <nav>
+      <div class="logo">nebula<span>.</span>labs</div>
+      <ul><li>Product</li><li>Research</li><li>Pricing</li><li>Contact</li></ul>
+    </nav>
+
+    <main>
+      <span class="tag">✦ Now in public beta</span>
+      <h1>Build the <span class="grad">future</span><br>at light speed.</h1>
+      <p class="lead">Nebula Labs turns your wildest ideas into reality with quantum-grade tooling, zero-latency pipelines, and a vibe you can't fake.</p>
+      <div class="cta">
+        <button class="btn primary">Get started →</button>
+        <button class="btn ghost">Watch the demo</button>
+      </div>
+
+      <section class="cards">
+        <div class="card"><div class="icon">⚡</div><h3>Hyperfast</h3><p>Deploys in under a blink. Literally faster than your monitor refresh rate.</p></div>
+        <div class="card"><div class="icon">🛰️</div><h3>Orbital scale</h3><p>From one user to one billion without touching a single config file.</p></div>
+        <div class="card"><div class="icon">🔮</div><h3>Predictive AI</h3><p>Knows what you want before you click. Go on, click anything.</p></div>
+      </section>
+    </main>
+
+    <footer>© 2026 Nebula Labs. All rights reserved.</footer>
+  </div>
+
+  <div id="no"><h1>NO</h1></div>
+
+  <script>
+    // Starfield
+    const c = document.getElementById('stars');
+    const ctx = c.getContext('2d');
+    let stars = [];
+    function resize() {
+      c.width = innerWidth; c.height = innerHeight;
+      stars = Array.from({ length: 180 }, () => ({
+        x: Math.random() * c.width, y: Math.random() * c.height,
+        r: Math.random() * 1.4 + .2, s: Math.random() * .4 + .05
+      }));
+    }
+    function tick() {
+      ctx.clearRect(0, 0, c.width, c.height);
+      ctx.fillStyle = '#fff';
+      for (const st of stars) {
+        st.y += st.s; if (st.y > c.height) st.y = 0;
+        ctx.globalAlpha = .4 + st.r / 2;
+        ctx.beginPath(); ctx.arc(st.x, st.y, st.r, 0, Math.PI * 2); ctx.fill();
+      }
+      requestAnimationFrame(tick);
+    }
+    addEventListener('resize', resize);
+    resize(); tick();
+
+    // Click anywhere → NO
+    document.addEventListener('click', () => {
+      document.title = 'NO';
+      document.body.classList.add('nope');
+    }, { once: true });
+  </script>
+</body>
+</html>
